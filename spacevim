@@ -1,0 +1,233 @@
+" Comment the following line if you don't want Vim and NeoVim to share the
+" same plugin download directory.
+let g:spacevim_plug_home = '~/.vim/plugged'
+
+" Uncomment the following line to override the leader key. The default value is space key "<\Space>".
+" let g:spacevim_leader = "<\Space>"
+let g:spacevim_leader = ","
+
+" Uncomment the following line to override the local leader key. The default value is comma ','.
+" let g:spacevim_localleader = ','
+
+" nerdtree show hidden files
+let NERDTreeShowHidden=1
+
+" Enable the existing layers in space-vim.
+" Refer to https://github.com/liuchengxu/space-vim/blob/master/layers/LAYERS.md for all available layers.
+let g:spacevim_layers = [
+      \ 'fzf', 'better-defaults', 'which-key',
+      \ ]
+
+" Uncomment the following line if your terminal(-emulator) supports true colors.
+" let g:spacevim_enable_true_color = 1
+
+" Uncomment the following if you have some nerd font installed.
+" let g:spacevim_nerd_fonts = 1
+
+" If you want to have more control over the layer, try using Layer command.
+" if g:spacevim.gui
+"   Layer 'airline'
+" endif
+
+" Manage your own plugins.
+" Refer to https://github.com/junegunn/vim-plug for more detials.
+function! UserInit()
+
+  " Add your own plugin via Plug command.
+  Plug 'junegunn/seoul256.vim'
+
+  " essential plugins
+  " file system explorer nerdtree
+  Plug 'scrooloose/nerdtree'
+  " vim motion on speed
+  Plug 'easymotion/vim-easymotion'
+  " comments -> key: gcc
+  Plug 'tpope/vim-commentary'
+  " multiple cursors -> key: ctrl+n
+  Plug 'terryma/vim-multiple-cursors'
+  " is all about 'surroundings'
+  Plug 'tpope/vim-surround'
+  " use configuration from editorconfig
+  Plug 'editorconfig/editorconfig-vim'
+  " fast search with ag
+  Plug 'rking/ag.vim'
+  " repeat last command -> key: .
+  Plug 'tpope/vim-repeat'
+  " git stuff
+  Plug 'airblade/vim-gitgutter'
+  Plug 'tpope/vim-fugitive'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+
+  " esential plugins for programming
+  " coc
+  Plug 'neoclide/coc.nvim' , { 'branch' : 'release' }
+
+  " snippets
+  Plug 'SirVer/Ultisnips'
+  Plug 'honza/vim-snippets'
+  Plug 'natebosch/dartlang-snippets'
+
+  " prettier -> key <leader>p
+  Plug 'prettier/vim-prettier', {
+    \ 'do': 'npm install',
+    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'markdown', 'yaml', 'html'] }
+
+
+  " vim-go golang
+  Plug 'fatih/vim-go'
+
+  " dart / flutter
+  Plug 'dart-lang/dart-vim-plugin'
+
+endfunction
+
+" Override the default settings from space-vim as well as adding extras
+function! UserConfig()
+
+  " Override the default settings.
+  " Uncomment the following line to disable relative number.
+  " set norelativenumber
+
+  " Adding extras.
+  " Uncomment the following line If you have installed the powerline fonts.
+  " It is good for airline layer.
+  " let g:airline_powerline_fonts = 1
+
+  set pastetoggle=<F2>
+
+  " Set to auto read when a file is changed from the outside
+  set autoread
+
+  " Ignore case when searching
+  set ignorecase
+
+  " When searching try to be smart about cases
+  set smartcase
+
+  " Highlight search results
+  set hlsearch
+
+  " Makes search act like search in modern browsers
+  set incsearch
+
+  " For regular expressions turn magic on
+  set magic
+
+  " No annoying sound on errors
+  set noerrorbells
+  set novisualbell
+  set t_vb=
+  set tm=500
+  set number
+
+  " Use spaces instead of tabs
+  set expandtab
+
+  " Be smart when using tabs ;)
+  set smarttab
+
+  " gitgutter"
+  let g:gitgutter_sign_added = '+'
+  let g:gitgutter_sign_modified = '~'
+  let g:gitgutter_sign_removed = '>'
+  let g:gitgutter_sign_removed_first_line = '^'
+  let g:gitgutter_sign_modified_removed = 'w'
+
+  set tabstop=2
+  set shiftwidth=2
+
+  " esc with key: ;;
+  inoremap ;; <Esc>
+
+  " Useful mappings for managing tabs
+  map <leader>tn :tabnew<cr>
+  map <leader>to :tabonly<cr>
+  map <leader>tc :tabclose<cr>
+  map <leader>tm :tabmove<cr>
+  map <leader>tt :tabnext<cr>
+
+  " screen split
+  map ;ws :split<cr>
+  map ;wv :vsplit<cr>
+
+  " cursor move to screen
+  nnoremap ;h <C-W>h
+  nnoremap ;j <C-W>j
+  nnoremap ;k <C-W>k
+  nnoremap ;l <C-W>l
+
+  nnoremap ;d <C-D>
+  nnoremap ;u <C-U>
+
+  nnoremap ;p :FZF<CR>
+
+  " snippets
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<c-b>"
+  let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+  " If you want :UltiSnipsEdit to split your window.
+  let g:UltiSnipsEditSplit="vertical"
+
+  " easymotion
+  map  <Leader>ef <Plug>(easymotion-bd-f)
+  nmap <Leader>ef <Plug>(easymotion-overwin-f)
+
+  " s{char}{char} to move to {char}{char}
+  nmap <Leader>es <Plug>(easymotion-overwin-f2)
+
+  " Move to line
+  map <Leader>ej <Plug>(easymotion-bd-jk)
+  nmap <Leader>ej <Plug>(easymotion-overwin-line)
+
+  " Move to word
+  map  <Leader>ew <Plug>(easymotion-bd-w)
+  nmap <Leader>ew <Plug>(easymotion-overwin-w)
+
+  " NERDTreeToggle
+  nmap <leader>m :NERDTreeToggle<CR>
+
+  "coc configuration
+
+  let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-snippets', 'coc-tsserver', 'coc-go', 'coc-flutter', 'coc-html', 'coc-yaml', 'coc-json' ]
+  " GoTo code navigation.
+  nmap <silent> <leader>gd <Plug>(coc-definition)
+  nmap <silent> <leader>gy <Plug>(coc-type-definition)
+  nmap <silent> <leader>gi <Plug>(coc-implementation)
+  nmap <silent> <leader>gR <Plug>(coc-references)
+
+  " Use K to show documentation in preview window.
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+  function! s:show_documentation()
+    if CocAction('hasProvider', 'hover')
+      call CocActionAsync('doHover')
+    else
+      call feedkeys('K', 'in')
+    endif
+  endfunction
+
+  "coc action
+  nmap <silent> <leader>ca <Plug>(coc-codeaction)
+
+  " golang
+  autocmd FileType go nnoremap <leader>gd :GoDef<CR>
+  autocmd FileType go nnoremap <leader>gf :GoDoc<CR>
+  autocmd FileType go nnoremap <leader>gr :GoRename<CR>
+  autocmd FileType go nnoremap <leader>gi :GoImport<CR>
+
+  "dart/flutter
+  autocmd FileType dart   nnoremap <leader>fa :FlutterRun -d linux<cr>
+  " my emulator is called emulator-5554
+  autocmd FileType dart   nnoremap <leader>fm :FlutterRun -d emulator-5554<cr>
+  autocmd FileType dart   nnoremap <leader>fq :FlutterQuit<cr>
+  autocmd FileType dart   nnoremap <leader>fr :FlutterHotReload<cr>
+  autocmd FileType dart   nnoremap <leader>fR :FlutterHotRestart<cr>
+  autocmd FileType dart   nnoremap <leader>fD :FlutterVisualDebug<cr>
+  autocmd FileType dart   nnoremap <leader>p :DartFmt<cr>
+
+  let g:flutter_hot_reload_on_save = 1
+  let g:lasttab = 1
+
+
+endfunction
+
